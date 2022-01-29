@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+  <head lang="en">
+    <meta charset="UTF-8" />
+    <title>手风琴</title>
+    <style>
+      ul {
+        list-style: none;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+      }
+
+      div {
+        width: 1200px;
+        height: 400px;
+        margin: 50px auto;
+        border: 1px solid red;
+        overflow: hidden;
+      }
+
+      div li {
+        width: 240px;
+        height: 400px;
+        float: left;
+        transition: all 500ms;
+      }
+
+      div ul {
+        width: 1200px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box">
+      <ul>
+        <li>
+          <a href="#">
+            <img src="./images/1.jpg" alt="" />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="./images/2.jpg" alt="" />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="./images/3.jpg" alt="" />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="./images/4.jpg" alt="" />
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <img src="./images/5.jpg" alt="" />
+          </a>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    /* 
+    1.函数防抖 ： 间隔时间内 多次触发事件，以最后一次为准
+    2.函数防抖思路：
+      (1)声明一个变量存储定时器id
+      (2)每一次触发事件的时候，先清除上一次的定时器，以本次为准
+      (3)开启定时器，间隔时间之后再触发事件处理函数
+        * 此时只要用户在这个间隔时间之内触发了其他事件，那么上一次的定时器就会被清除
+    
+    */
+
+    //1.获取元素
+    let liList = document.querySelectorAll('#box li')
+    let box = document.querySelector('#box')
+
+    //防抖第一步：声明变量存储定时器id
+    let timeID = null
+
+    //2.注册事件
+    //2.1 鼠标移入
+    for (let i = 0; i < liList.length; i++) {
+      liList[i].onmouseenter = function () {
+        //防抖第二步： 每一次触发事件的时候，都要把上一次的定时器给移除。 以最后一次为准
+        clearTimeout(timeID)
+        //防抖第三步：每一次触发事件的时候，先不触发。开启定时器，间隔时间之后再触发
+        timeID = setTimeout(function () {
+          //3.排他思想修改宽度： 我自己800px，其他人100px
+          for (let j = 0; j < liList.length; j++) {
+            if (i === j) {
+              liList[j].style.width = '800px'
+            } else {
+              liList[j].style.width = '100px'
+            }
+          }
+        }, 300)
+      }
+    }
+
+    //2.2 鼠标移出父盒子
+    box.onmouseleave = function () {
+      //3.设置每一个li元素宽度240
+      clearTimeout(timeID)
+      timeID = setTimeout(function () {
+        for (let i = 0; i < liList.length; i++) {
+          liList[i].style.width = '240px'
+        }
+      }, 300)
+    }
+  </script>
+</html>

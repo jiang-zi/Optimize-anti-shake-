@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+        body{
+            height: 3000px;
+        }
+    </style>
+  </head>
+  <body>
+    <script>
+       /* 
+        1.函数节流 ： 间隔时间内函数只被触发一次
+        2.函数节流作用： 降低高频事件的触发频率
+            高频事件： 触发频率很高的事件  onmousemove  onscroll
+        3.函数节流思路：
+            3.1 声明变量存储本次触发的时间time
+            3.2 每一次触发的时候， 使用 当前时间 - time,判断两次间隔是否超过 节流时间
+                超过： 触发，并且存储本次触发时间
+                不超过：不触发
+        */
+      
+      //节流第一步： 存储变量记录触发时间
+      let time = null
+        
+      let i = 1
+      //高频事件：鼠标移动
+      window.onmousemove = function () {
+        //节流第二步： 判断两次间隔是否超过 节流时间
+        let currentTime = Date.now()
+        if( currentTime - time >= 10000 ){
+            i++
+            console.log('鼠标移动触发次数：' + i )
+            //节流第三步： 存储本次触发时间
+            time = currentTime
+        } 
+      }
+    //   let j = 1
+      //高频事件：鼠标滚动
+    //   window.onscroll = function(){
+    //     j++
+    //     console.log('鼠标滚动条触发次数：' + j )
+    //   }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <input type="text" placeholder="请输入搜索内容" />
+    <script>
+      /* 
+        1.函数防抖及应用场景：
+            1.1 函数防抖 ： 间隔时间 内多次触发事件以最后一次为准
+            1.2 应用场景 ： 鼠标移入/移出 、 键盘输入框
+        2.函数节流及应用场景：
+            2.1 函数节流 ： 间隔时间 内事件只会触发一次
+            2.2 应用场景 ： 高频事件 鼠标移动  鼠标滚动条
+        3.防抖与节流异同点 ：
+            相同点： 都是为了优化函数执行频率,提高网页性能
+            不同点：
+                防抖： 优化‘用户主动‘触发的事件， 多次触发以最后一次为准
+                节流： 优化‘事件本身’执行的频率， 间隔时间只执行一次
+      */
+      
+      let timeID = null
+
+      //搜索框防抖案例
+      document.querySelector('input').oninput = function () {
+
+        //清除上一次定时器，以本次为准
+        clearTimeout(timeID)
+        //开启本次防抖定时器
+        /* 
+        细节：定时器中的this，默认指向window
+        如果定时器函数是箭头函数，则会访问上一次this : 事件源
+        */
+        timeID = setTimeout(()=>{
+            console.log(this.value)
+        },300)
+
+      }
+    </script>
+  </body>
+</html>
